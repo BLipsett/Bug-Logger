@@ -10,10 +10,24 @@
       </div>
       <div class="col-12">
         <div class="bug-box border shadow">
+          <div class="row table-header">
+            <div class="col-md-3">
+              <p>Bug Title</p>
+            </div>
+            <div class="col-md-3">
+              <p> Creator Name </p>
+            </div>
+            <div class="col-md-3">
+              <p>Status</p>
+            </div>
+            <div class="col-md-3">
+              <p>Date Created</p>
+            </div>
+          </div>
           <Bug v-for="b in bugs" :key="b.id" :bug="b" />
         </div>
-      </div>
-      <div>
+        <div>
+        </div>
       </div>
     </div>
   </div>
@@ -37,5 +51,9 @@ export default {
 <style scoped lang="scss">
 .bug-box {
   height: 70vh;
+}
+
+.table-header {
+  border-bottom: 2px solid black;
 }
 </style>

@@ -1,5 +1,30 @@
 <template>
-  <div v-if="(bugIndex % 2 == 1)" class="light-bg">
+  <div v-if="bugIndex % 2 == 0" class="light-bg">
+    <div class="row border d-flex align-items-center bug-row">
+      <div class="col-md-3">
+        <h4>{{ bug.title }}</h4>
+      </div>
+      <div class="col-md-3">
+        <p>
+          {{ bug.creator.name }}
+        </p>
+      </div>
+      <div class="col-md-3">
+        <p v-if="bug.closed" class="closed">
+          Closed
+        </p>
+        <p v-else class="open">
+          Open
+        </p>
+      </div>
+      <div class="col-md-3">
+        <p>
+          {{ posted }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div v-else>
     <div class="row border d-flex align-items-center bug-row">
       <div class="col-md-3">
         <h4>{{ bug.title }}</h4>
