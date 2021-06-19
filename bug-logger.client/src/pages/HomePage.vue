@@ -1,25 +1,41 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <img src="https://bcw.blob.core.windows.net/public/img/8600856373152463" alt="CodeWorks Logo">
-    <h1 class="my-5 bg-dark text-light p-3 rounded d-flex align-items-center">
-      <span class="mx-2 text-white">Vue 3 Starter</span>
-    </h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <h1>Current Bugs</h1>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+          report bug
+        </button>
+        <CreateBugModal />
+      </div>
+      <div class="col-12">
+        <div class="bug-box border shadow">
+          <Bug v-for="b in bugs" :key="b.id" :bug="b" />
+        </div>
+      </div>
+      <div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import { computed } from '@vue/runtime-core'
+import { AppState } from '../AppState'
+// import { onMounted } from '@vue/runtime-core'
+// import { bugsService } from '../services/BugsService'
 export default {
-  name: 'Home'
+  setup() {
+    // onMounted(async() => await bugsService.getBugs())
+    return {
+      bugs: computed(() => AppState.bugs)
+    }
+  }
 }
 </script>
 
 <style scoped lang="scss">
-.home{
-  text-align: center;
-  user-select: none;
-  > img{
-    height: 200px;
-    width: 200px;
-  }
+.bug-box {
+  height: 70vh;
 }
 </style>

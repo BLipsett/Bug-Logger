@@ -1,15 +1,16 @@
-
-  {
+{
     "name": "bug-logger",
     "version": "1.0.0",
     "scripts": {
-      "setup:app": "npm run setup:client && npm run setup:server",
-      "setup:client": "cd bug-logger.client && npm i",
-      "setup:server": "cd bug-logger.server && npm i",
-      "start": "node bug-logger.server/index.js"
+        "setup:app": "npm run setup:client && npm run setup:server",
+        "setup:client": "cd bug-logger.client && npm i",
+        "setup:server": "cd bug-logger.server && npm i",
+        "start": "node bug-logger.server/index.js"
     },
     "engines": {
-      "node": "^14.17.0"
+        "node": "^14.17.0"
+    },
+    "dependencies": {
+        "moment": "^2.29.1"
     }
-  }
-  
+}
