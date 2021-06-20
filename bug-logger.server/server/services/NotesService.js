@@ -1,4 +1,5 @@
 import { dbContext } from '../db/DbContext'
+import { BadRequest } from '../utils/Errors'
 
 class NotesService {
   async getNotesByBugId(id = {}) {
@@ -13,7 +14,9 @@ class NotesService {
   }
 
   async deleteNote(id, userId) {
-    return await dbContext.Notes.findOneAndDelete({ _id: id, creatorId: userId })
+    const note = await dbContext.Notes.findOneAndDelete({ _id: id, creatorId: userId })
+    if (!note) throw new BadRequest('bad request')
+    return note
   }
 }
 

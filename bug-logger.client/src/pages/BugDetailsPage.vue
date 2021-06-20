@@ -2,23 +2,26 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6">
-        <h3>title</h3>
-        <div v-if="activeBug">
-          <p>{{ activeBug.title }}</p>
-          <h3>Reported by:</h3>
-          <p>{{ activeBug.creator.name }}</p>
-        </div>
-        <div class="col-md-6">
-          <p v-if="activeBug.closed" class="closed">
-            Closed
-          </p>
-          <p v-else class="open">
-            Open
-          </p>
-        </div>
-        <div class="col-md-12 border">
-          <p>{{ activeBug.description }}</p>
-        </div>
+        <h2>title</h2>
+        <p class="bug-title">
+          {{ activeBug.title }}
+        </p>
+        <h3>Reported by:</h3>
+        <p>{{ activeBug.creator.name }}</p>
+      </div>
+      <div class="col-md-6">
+        <button @click="closeBug(activeBug.id)">
+          CLOSE
+        </button>
+        <p v-if="activeBug.closed" class="closed">
+          Closed
+        </p>
+        <p v-else class="open">
+          Open
+        </p>
+      </div>
+      <div class="col-md-12 bug-description">
+        <p>{{ activeBug.description }}</p>
       </div>
     </div>
     <div class="row">
@@ -43,9 +46,7 @@ import { useRoute } from 'vue-router'
 import Notification from '../utils/Notification'
 
 export default {
-  props: {
-    // activeBug: { type: Object, required: true }
-  },
+
   setup() {
     const route = useRoute()
     const state = reactive({
@@ -64,7 +65,11 @@ export default {
 
     return {
       state,
-      activeBug: computed(() => AppState.activeBug)
+      activeBug: computed(() => AppState.activeBug),
+      async closeBug(id) {
+        state.activeBug.closed = true
+        await bugsService.closeBug(id, state.activeBug)
+      }
 
     }
   }
@@ -72,6 +77,22 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.bug-title {
+  font-size: 3rem;
+}
+
+.closed {
+  color: red;
+
+}
+.open {
+  color: green
+}
+
+.bug-description {
+  border: 1px solid black;
+  height: 20vh;
+}
 
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="col-md-12 my-3 border">
+  <div class="col-md-12 border">
     <p>
       {{ note.body }}
     </p>

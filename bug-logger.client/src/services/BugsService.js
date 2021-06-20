@@ -35,6 +35,12 @@ class BugsService {
     AppState.notes = res.data
     logger.log(AppState.notes)
   }
+
+  async closeBug(id, body) {
+    const res = await api.delete('api/bugs/' + id, body)
+    logger.log('close bug', res)
+    AppState.bugs = res.data
+  }
 }
 
 export const bugsService = new BugsService()
