@@ -34,13 +34,12 @@
 </template>
 
 <script>
-import { computed } from '@vue/runtime-core'
+import { computed, onMounted } from '@vue/runtime-core'
 import { AppState } from '../AppState'
-// import { onMounted } from '@vue/runtime-core'
-// import { bugsService } from '../services/BugsService'
+import { bugsService } from '../services/BugsService'
 export default {
   setup() {
-    // onMounted(async() => await bugsService.getBugs())
+    onMounted(async() => await bugsService.getBugs())
     return {
       bugs: computed(() => AppState.bugs)
     }

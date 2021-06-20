@@ -1,9 +1,4 @@
 <template>
-  <div class="col-md-2">
-    <b>
-      <h3>notes</h3>
-    </b>
-  </div>
   <div class="col-md-12 my-3 border">
     <p>
       {{ note.body }}

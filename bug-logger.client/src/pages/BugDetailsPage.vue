@@ -3,28 +3,30 @@
     <div class="row">
       <div class="col-md-6">
         <h3>title</h3>
-        <p>{{ state.activeBug.title }}</p>
-        <h3>Reported by:</h3>
-        <p>{{ state.activeBug.creator.name }}</p>
-      </div>
-      <div class="col-md-6">
-        <p v-if="state.activeBug.closed" class="closed">
-          Closed
-        </p>
-        <p v-else class="open">
-          Open
-        </p>
-      </div>
-      <div class="col-md-12 border">
-        <p>{{ state.activeBug.description }}</p>
+        <div v-if="activeBug">
+          <p>{{ activeBug.title }}</p>
+          <h3>Reported by:</h3>
+          <p>{{ activeBug.creator.name }}</p>
+        </div>
+        <div class="col-md-6">
+          <p v-if="activeBug.closed" class="closed">
+            Closed
+          </p>
+          <p v-else class="open">
+            Open
+          </p>
+        </div>
+        <div class="col-md-12 border">
+          <p>{{ activeBug.description }}</p>
+        </div>
       </div>
     </div>
-
     <div class="row">
       <div class="col-md-12">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#noteModal">
           Add Note
         </button>
+        <h2>Notes</h2>
         <Note v-for="n in state.notes" :key="n.id" :note="n" />
       </div>
     </div>
@@ -61,7 +63,9 @@ export default {
     )
 
     return {
-      state
+      state,
+      activeBug: computed(() => AppState.activeBug)
+
     }
   }
 

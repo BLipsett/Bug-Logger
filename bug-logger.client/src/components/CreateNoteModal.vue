@@ -11,12 +11,11 @@
           </button>
         </div>
         <div class="modal-body">
-          <form>
+          <form @submit.prevent="createNote">
             <div class="form-group">
               <label for="exampleFormControlTextarea1">Note Description</label>
               <textarea v-model="state.noteInfo.body" class="form-control" id="exampleFormControlTextarea1" rows="7"></textarea>
             </div>
-
             <button type="button" class="btn btn-secondary" data-dismiss="modal">
               Discard
             </button>
@@ -32,13 +31,23 @@
 
 <script>
 import { reactive } from '@vue/reactivity'
+import { notesService } from '../services/NotesService'
+import { useRoute } from 'vue-router'
+import { bugsService } from '../services/BugsService'
 export default {
   setup() {
+    const route = useRoute()
     const state = reactive({
       noteInfo: {}
     })
     return {
-      state
+      state,
+      async createNote() {
+        state.noteInfo.bug = route.params.id
+        await notesService.createNote(state.noteInfo)
+        state.noteInfo = {}
+        await bugsService.getNotes(route.params.id)
+      }
 
     }
   }
