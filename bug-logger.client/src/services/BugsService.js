@@ -19,6 +19,22 @@ class BugsService {
     const res = await api.get('api/bugs')
     AppState.bugs = res.data
   }
+
+  async getBug(id) {
+    const res = await api.get('api/bugs/' + id)
+    AppState.activeBug = res.data
+  }
+
+  async setActiveBug(id) {
+    const res = await api.get('api/bugs/' + id)
+    AppState.activeBug = res.data
+  }
+
+  async getNotes(id) {
+    const res = await api.get('api/bugs/' + id + '/notes')
+    AppState.notes = res.data
+    logger.log(AppState.notes)
+  }
 }
 
 export const bugsService = new BugsService()
