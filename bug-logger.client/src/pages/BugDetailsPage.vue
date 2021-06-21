@@ -7,6 +7,7 @@
           {{ activeBug.title }}
         </p>
         <h3>Reported by:</h3>
+        <img class="user-pic" :src="activeBug.creator.picture">
         <p>{{ activeBug.creator.name }}</p>
       </div>
       <div class="col-md-6">
@@ -26,7 +27,7 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#noteModal">
+        <button v-if="activeBug.closed === false" type="button" class="btn btn-primary" data-toggle="modal" data-target="#noteModal">
           Add Note
         </button>
         <h2>Notes</h2>
@@ -40,7 +41,7 @@
 <script>
 import { reactive } from '@vue/reactivity'
 import { AppState } from '../AppState'
-import { computed, onMounted } from '@vue/runtime-core'
+import { computed, watchEffect } from '@vue/runtime-core'
 import { bugsService } from '../services/BugsService'
 import { useRoute } from 'vue-router'
 import Notification from '../utils/Notification'
@@ -53,7 +54,7 @@ export default {
       activeBug: computed(() => AppState.activeBug),
       notes: computed(() => AppState.notes)
     })
-    onMounted(async() => {
+    watchEffect(async() => {
       try {
         await bugsService.getBug(route.params.id)
         await bugsService.getNotes(route.params.id)
@@ -93,6 +94,12 @@ export default {
 .bug-description {
   border: 1px solid black;
   height: 20vh;
+}
+
+.user-pic{
+  height: 4rem;
+  width: 4rem;
+  border-radius: 50%;
 }
 
 </style>

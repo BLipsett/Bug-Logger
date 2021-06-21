@@ -21,7 +21,7 @@
               <p>Status</p>
             </div>
             <div class="col-md-3">
-              <p>Date Created</p>
+              <p>Last Modified</p>
             </div>
           </div>
           <Bug v-for="b in bugs" :key="b.id" :bug="b" />
@@ -34,12 +34,12 @@
 </template>
 
 <script>
-import { computed, onMounted } from '@vue/runtime-core'
+import { computed, watchEffect } from '@vue/runtime-core'
 import { AppState } from '../AppState'
 import { bugsService } from '../services/BugsService'
 export default {
   setup() {
-    onMounted(async() => await bugsService.getBugs())
+    watchEffect(async() => await bugsService.getBugs())
     return {
       bugs: computed(() => AppState.bugs)
     }

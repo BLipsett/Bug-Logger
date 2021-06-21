@@ -7,9 +7,8 @@ class BugsService {
   async createBug(newBug) {
     try {
       const res = await api.post('api/bugs', newBug)
-      AppState.bugs = res.data
-      logger.log(res)
-      this.getBugs()
+      AppState.activeBug = res.data
+      logger.log(AppState.bugs)
     } catch (error) {
       Notification.toast('service error', error)
     }
