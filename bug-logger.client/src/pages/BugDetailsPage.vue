@@ -23,7 +23,7 @@
         <button v-if="activeBug.creatorId === state.account.id" @click="showEditForm = !showEditForm">
           edit bug
         </button>
-        <form @submit="editBug(activeBug.id)" v-if="showEditForm">
+        <form @submit.prevent="editBug(activeBug.id)" v-if="showEditForm">
           <textarea class="form-control" placeholder="New Bug Title" v-model="newBug.title"></textarea>
           <textarea class="form-control" placeholder="New Bug description" v-model="newBug.description"></textarea>
 

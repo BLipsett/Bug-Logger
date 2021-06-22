@@ -20,6 +20,7 @@ class BugsService {
 
   async updateBug(body) {
     body.closed = false
+    delete body.creatorId
     const bug = await this.getOne(body.id)
     if (bug.closed === true) {
       throw new BadRequest('Invalid Id')
@@ -29,7 +30,7 @@ class BugsService {
   }
 
   async deleteBug(bugId, data) {
-    data = { ...data, closed: true }
+    data = { closed: true }
     const bug = await dbContext.Bugs.findByIdAndUpdate(bugId, data, { new: true, runValidators: true })
     return bug
   }
