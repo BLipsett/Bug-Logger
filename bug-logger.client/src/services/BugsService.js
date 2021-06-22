@@ -40,6 +40,15 @@ class BugsService {
     logger.log('close bug', res)
     AppState.bugs = res.data
   }
+
+  async editBug(id, body) {
+    try {
+      const res = await api.put('api/bugs/' + id, body)
+      AppState.bugs = res.data
+    } catch (error) {
+      logger.log(error)
+    }
+  }
 }
 
 export const bugsService = new BugsService()

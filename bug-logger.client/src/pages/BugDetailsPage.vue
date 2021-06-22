@@ -20,6 +20,17 @@
         <p v-else class="open">
           Open
         </p>
+        <button v-if="activeBug.creatorId === state.account.id" @click="showEditForm = !showEditForm">
+          edit bug
+        </button>
+        <form @submit="editBug(activeBug.id)" v-if="showEditForm">
+          <textarea class="form-control" placeholder="New Bug Title" v-model="newBug.title"></textarea>
+          <textarea class="form-control" placeholder="New Bug description" v-model="newBug.description"></textarea>
+
+          <button type="submit">
+            edit title
+          </button>
+        </form>
       </div>
       <div class="col-md-12 bug-description">
         <p>{{ activeBug.description }}</p>
@@ -39,7 +50,7 @@
 </template>
 
 <script>
-import { reactive } from '@vue/reactivity'
+import { reactive, ref } from '@vue/reactivity'
 import { AppState } from '../AppState'
 import { computed, watchEffect } from '@vue/runtime-core'
 import { bugsService } from '../services/BugsService'
@@ -52,8 +63,12 @@ export default {
     const route = useRoute()
     const state = reactive({
       activeBug: computed(() => AppState.activeBug),
-      notes: computed(() => AppState.notes)
+      notes: computed(() => AppState.notes),
+      account: computed(() => AppState.account)
+
     })
+    const newBug = ref({})
+    let showEditForm = ref(false)
     watchEffect(async() => {
       try {
         await bugsService.getBug(route.params.id)
@@ -66,11 +81,23 @@ export default {
 
     return {
       state,
+      newBug,
+      showEditForm,
       activeBug: computed(() => AppState.activeBug),
       async closeBug(id) {
         if (window.confirm('Do you want to close this bug?')) {
           state.activeBug.closed = true
           await bugsService.closeBug(id, state.activeBug)
+        }
+      },
+
+      async editBug(id) {
+        try {
+          bugsService.editBug(id, newBug.value)
+          newBug.value = {}
+          showEditForm = ref(false)
+        } catch (error) {
+          logger.log(error)
         }
       }
 
