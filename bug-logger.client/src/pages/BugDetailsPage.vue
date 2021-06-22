@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="row">
+    <div v-if="activeBug" class="row">
       <div class="col-md-6">
         <h2>title</h2>
         <p class="bug-title">
@@ -14,7 +14,7 @@
         <button @click="closeBug(activeBug.id)">
           CLOSE
         </button>
-        <p v-if="activeBug.closed" class="closed">
+        <p v-if="activeBug.closed === true" class="closed">
           Closed
         </p>
         <p v-else class="open">
@@ -26,7 +26,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-12">
+      <div v-if="activeBug" class="col-md-12">
         <button v-if="activeBug.closed === false" type="button" class="btn btn-primary" data-toggle="modal" data-target="#noteModal">
           Add Note
         </button>
@@ -44,7 +44,7 @@ import { AppState } from '../AppState'
 import { computed, watchEffect } from '@vue/runtime-core'
 import { bugsService } from '../services/BugsService'
 import { useRoute } from 'vue-router'
-import Notification from '../utils/Notification'
+import { logger } from '../utils/Logger'
 
 export default {
 
@@ -59,7 +59,7 @@ export default {
         await bugsService.getBug(route.params.id)
         await bugsService.getNotes(route.params.id)
       } catch (error) {
-        Notification.toast('uh oh')
+        logger.log(error)
       }
     }
     )
@@ -68,8 +68,10 @@ export default {
       state,
       activeBug: computed(() => AppState.activeBug),
       async closeBug(id) {
-        state.activeBug.closed = true
-        await bugsService.closeBug(id, state.activeBug)
+        if (window.confirm('Do you want to close this bug?')) {
+          state.activeBug.closed = true
+          await bugsService.closeBug(id, state.activeBug)
+        }
       }
 
     }

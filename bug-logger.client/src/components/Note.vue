@@ -10,14 +10,34 @@
           {{ note.body }}
         </p>
       </div>
+      <div class="col-md-4 ml-auto">
+        <button v-if="note.creator.id === state.account.id" class="ml-auto" @click="deleteNote(note.id)">
+          Delete
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { reactive } from '@vue/reactivity'
+import { notesService } from '../services/NotesService'
+import { computed } from '@vue/runtime-core'
+import { AppState } from '../AppState'
 export default {
   props: {
     note: { type: Object, required: true }
+  },
+  setup() {
+    const state = reactive({
+      account: computed(() => AppState.account)
+    })
+    return {
+      state,
+      async deleteNote(id) {
+        if (window.confirm('Do you want to delete this note?')) { await notesService.deleteNote(id) }
+      }
+    }
   }
 
 }

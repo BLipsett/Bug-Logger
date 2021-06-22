@@ -28,9 +28,9 @@ class BugsService {
     return newBug
   }
 
-  async deleteBug(bugId, bugData) {
-    bugData = { ...bugData, closed: true }
-    const bug = await dbContext.Bugs.findByIdAndUpdate(bugId, bugData, { new: true, runValidators: true })
+  async deleteBug(bugId, data) {
+    data = { ...data, closed: true }
+    const bug = await dbContext.Bugs.findByIdAndUpdate(bugId, data, { new: true, runValidators: true })
     return bug
   }
 }

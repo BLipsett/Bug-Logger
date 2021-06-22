@@ -10,7 +10,7 @@
         <div class="col-md-3">
           <h4>{{ bug.title }}</h4>
         </div>
-        <div class="col-md-3 d-flex">
+        <div class="col-md-3 d-flex align-items-center">
           <img class="user-pic" :src="bug.creator.picture">
           <p>
             {{ bug.creator.name }}
@@ -43,7 +43,7 @@
         <div class="col-md-3 d-flex">
           <h4>{{ bug.title }}</h4>
         </div>
-        <div class="col-md-3 d-flex">
+        <div class="col-md-3 d-flex align-items-center">
           <img class="user-pic" :src="bug.creator.picture">
 
           <p>
@@ -121,6 +121,17 @@ export default {
 
 .light-bg {
   background-color: rgb(182, 182, 182);
+}
+
+.bug-row {
+  p {
+  margin: 0
+  }
+  h4 {
+    margin: 0;
+    padding-left: 5px;
+  }
+
 }
 
 .user-pic {

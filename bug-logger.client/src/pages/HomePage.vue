@@ -6,13 +6,23 @@
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
           report bug
         </button>
-        <CreateBugModal />
       </div>
+      <div class="col-md-3 ml-auto">
+        <button @click="sortByOpen">
+          Sort by open bugs
+        </button>
+        <button @click="sortByClosed">
+          Sort by closed bugs
+        </button>
+      </div>
+      <CreateBugModal />
       <div class="col-12">
         <div class="bug-box border shadow">
           <div class="row table-header">
             <div class="col-md-3">
-              <p>Bug Title</p>
+              <p class="pl-2">
+                Bug Title
+              </p>
             </div>
             <div class="col-md-3">
               <p> Creator Name </p>
@@ -24,7 +34,7 @@
               <p>Last Modified</p>
             </div>
           </div>
-          <Bug v-for="b in bugs" :key="b.id" :bug="b" />
+          <Bug v-for="b in state.bugs" :key="b.id" :bug="b" />
         </div>
         <div>
         </div>
@@ -34,14 +44,28 @@
 </template>
 
 <script>
-import { computed, watchEffect } from '@vue/runtime-core'
+import { computed, reactive, watchEffect } from '@vue/runtime-core'
 import { AppState } from '../AppState'
 import { bugsService } from '../services/BugsService'
 export default {
   setup() {
+    const state = reactive({
+      bugs: computed(() => AppState.bugs)
+
+    })
     watchEffect(async() => await bugsService.getBugs())
     return {
-      bugs: computed(() => AppState.bugs)
+      state,
+      async sortByOpen() {
+        state.bugs.sort(function(a, b) {
+          return a.closed - b.closed
+        })
+      },
+      async sortByClosed() {
+        state.bugs.sort(function(a, b) {
+          return b.closed - a.closed
+        })
+      }
     }
   }
 }

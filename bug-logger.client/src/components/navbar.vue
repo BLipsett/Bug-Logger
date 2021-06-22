@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
+    <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }" @click="getBugs">
       <div class="d-flex flex-column align-items-center">
         <img
           alt="logo"
@@ -23,7 +23,7 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <router-link :to="{ name: 'Home' }" class="nav-link">
+          <router-link :to="{ name: 'Home' }" class="nav-link" @click="getBugs">
             Home
           </router-link>
         </li>
@@ -82,6 +82,7 @@
 import { AuthService } from '../services/AuthService'
 import { AppState } from '../AppState'
 import { computed, reactive } from 'vue'
+import { bugsService } from '../services/BugsService'
 export default {
   name: 'Navbar',
   setup() {
@@ -96,6 +97,9 @@ export default {
       },
       async logout() {
         AuthService.logout({ returnTo: window.location.origin })
+      },
+      async getbugs() {
+        await bugsService.getBugs()
       }
     }
   }
