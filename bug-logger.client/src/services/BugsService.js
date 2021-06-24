@@ -38,13 +38,13 @@ class BugsService {
   async closeBug(id, body) {
     const res = await api.delete('api/bugs/' + id, body)
     logger.log('close bug', res)
-    AppState.bugs = res.data
+    AppState.activeBug = res.data
   }
 
   async editBug(id, body) {
     try {
       const res = await api.put('api/bugs/' + id, body)
-      AppState.bugs = res.data
+      AppState.activeBug = res.data
     } catch (error) {
       logger.log(error)
     }

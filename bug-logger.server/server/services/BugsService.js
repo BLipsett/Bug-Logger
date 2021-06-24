@@ -26,6 +26,7 @@ class BugsService {
       throw new BadRequest('Invalid Id')
     }
     const newBug = await dbContext.Bugs.findOneAndUpdate({ _id: body.id }, body, { new: true })
+      .populate('creator', 'name picture')
     return newBug
   }
 
