@@ -20,7 +20,6 @@
               <label for="bug-description">Bug Description</label>
               <textarea v-model="state.bugInfo.description" class="form-control" id="bug-description" rows="7"></textarea>
             </div>
-
             <button type="button" class="btn btn-secondary" data-dismiss="modal">
               Discard
             </button>
