@@ -1,12 +1,8 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }" @click="getBugs">
+    <router-link class="d-flex" :to="{ name: 'Home' }" @click="getBugs">
       <div class="d-flex flex-column align-items-center">
-        <img
-          alt="logo"
-          src="../assets/img/cw-logo.png"
-          height="45"
-        />
+        <h3>Bug logger</h3>
       </div>
     </router-link>
     <button
