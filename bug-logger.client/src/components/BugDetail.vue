@@ -14,7 +14,7 @@
       Open
     </p>
   </div>
-  <div class="col-md-12 border">
+  <div class="col-lg-12 border">
     <p>{{ state.activeBug.description }}</p>
   </div>
 </template>
